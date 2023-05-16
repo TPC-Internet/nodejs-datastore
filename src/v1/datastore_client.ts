@@ -244,9 +244,9 @@ export class DatastoreClient {
    */
   initialize() {
     // If the client stub promise is already initialized, return immediately.
-    if (this.datastoreStub) {
-      return this.datastoreStub;
-    }
+    // if (this.datastoreStub) {
+    //   return this.datastoreStub;
+    // }
 
     // Put together the "service stub" for
     // google.datastore.v1.Datastore.
