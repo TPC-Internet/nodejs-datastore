@@ -299,6 +299,9 @@ export class DatastoreClient {
       this.innerApiCalls[methodName] = apiCall;
     }
 
+    if (global.gc) {
+      global.gc();
+    }
     return this.datastoreStub;
   }
 
