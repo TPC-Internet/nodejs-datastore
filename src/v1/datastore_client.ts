@@ -25,6 +25,7 @@ import type {
   ClientOptions,
   GrpcClientOptions,
 } from 'google-gax';
+import type {RequestType, APICallback} from 'google-gax/build/src/apitypes';
 
 import * as protos from '../../protos/protos';
 import jsonProtos = require('../../protos/protos.json');
@@ -289,14 +290,27 @@ export class DatastoreClient {
       );
 
       const descriptor = undefined;
-      const apiCall = this._gaxModule.createApiCall(
-        callPromise,
-        this._defaults[methodName],
-        descriptor,
-        this._opts.fallback
-      );
+      // const apiCall = this._gaxModule.createApiCall(
+      //   callPromise,
+      //   this._defaults[methodName],
+      //   descriptor,
+      //   this._opts.fallback
+      // );
 
-      this.innerApiCalls[methodName] = apiCall;
+      // this.innerApiCalls[methodName] = apiCall;
+      this.innerApiCalls[methodName] = (
+        request: RequestType,
+        callOptions?: CallOptions,
+        callback?: APICallback
+      ) => {
+        const apiCall = this._gaxModule.createApiCall(
+          callPromise,
+          this._defaults[methodName],
+          descriptor,
+          this._opts.fallback
+        );
+        return apiCall(request, callOptions, callback);
+      };
     }
 
     return this.datastoreStub;
